@@ -11,7 +11,7 @@ export default function AboutUsPage() {
         </h1>
 
         <div className="grid gap-10 md:grid-cols-2">
-          {/* Visi */}
+      
           <div className="bg-white rounded-2xl shadow-2xl p-8 hover:scale-[1.02] transition-transform duration-300">
             <div className="flex items-center mb-5 space-x-3">
               <FaBullseye className="text-blue-500 text-3xl" />
