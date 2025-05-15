@@ -47,7 +47,7 @@ export default function AboutUsPage() {
           </div>
         </div>
 
-        {/* Komitmen Kami */}
+      
         <section className="bg-white rounded-2xl shadow-2xl p-8">
           <div className="flex items-center mb-5 space-x-3">
             <FaHandsHelping className="text-green-500 text-3xl" />
