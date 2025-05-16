@@ -12,36 +12,36 @@ export default function Home() {
 
   return (
     <>
-      <div className="relative bg-gradient-to-r from-blue-500 to-teal-500 min-h-screen flex justify-center items-center text-center text-white">
-        <div className="absolute top-0 left-0 right-0 bottom-0 bg-black opacity-50"></div>
+      <div className="relative bg-gradient-to-br from-blue-600 via-cyan-500 to-emerald-400 min-h-screen flex justify-center items-center text-center text-white font-serif tracking-wide">
+        <div className="absolute top-0 left-0 right-0 bottom-0 bg-black opacity-40"></div>
 
         <div className="z-10 px-6 py-12 md:px-12 lg:px-24 text-center">
           <Image
             src="/assets/images/logo.png"
             alt="Hero Farma Logo"
-            width={200}
-            height={200}
-            className="mx-auto mb-6"
+            width={260} // diperbesar
+            height={260} // diperbesar
+            className="mx-auto mb-8"
           />
 
-          <h1 className="text-5xl font-extrabold leading-tight mb-6 animate__animated animate__fadeIn animate__delay-1s">
+          <h1 className="text-6xl font-extrabold leading-tight mb-6 animate__animated animate__fadeIn animate__delay-1s">
             Selamat Datang di{" "}
-            <span className="text-yellow-400">Hero Farma</span>
+            <span className="text-yellow-300 drop-shadow-lg">Hero Farma</span>
           </h1>
 
-          <p className="text-lg md:text-xl mb-8 opacity-90">{message}</p>
+          <p className="text-xl md:text-2xl mb-10 opacity-95 drop-shadow-sm">{message}</p>
 
           <div className="flex justify-center gap-8">
             <button
               onClick={() => router.push("/tentang-kami")}
-              className="bg-transparent border-2 border-white text-white py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition duration-300 transform hover:scale-105"
+              className="bg-transparent border-2 border-white text-white py-3 px-8 rounded-xl hover:bg-white hover:text-gray-900 transition duration-300 transform hover:scale-105 shadow-lg"
             >
               Pelajari Lebih Lanjut
             </button>
 
             <button
               onClick={() => router.push("/produk")}
-              className="bg-yellow-400 text-gray-800 py-3 px-8 rounded-lg hover:bg-yellow-500 transition duration-300 transform hover:scale-105"
+              className="bg-yellow-300 text-gray-900 py-3 px-8 rounded-xl hover:bg-yellow-400 transition duration-300 transform hover:scale-105 shadow-lg"
             >
               Lihat Produk
             </button>

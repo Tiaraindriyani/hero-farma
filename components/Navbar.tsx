@@ -2,68 +2,53 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation"; // Import usePathname untuk mendapatkan path saat ini
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname(); // Gunakan usePathname untuk mendapatkan path saat ini
+  const pathname = usePathname();
 
-  // Cek jika URL saat ini mengarah ke direktori /admin
   if (pathname.startsWith("/admin")) {
-    return null; // Jika di direktori /admin, navbar tidak akan ditampilkan
+    return null;
   }
 
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-teal-500 shadow-lg fixed w-full z-50">
-      <div className="max-w-screen-xl mx-auto px-4 py-5 flex justify-between items-center">
-        {/* Logo & Nama */}
-        <div className="flex items-center space-x-3">
-          <Image
-            src="/assets/images/logo.png" // Ganti dengan path logo
-            alt="Hero Farma Logo"
-            width={50}
-            height={50}
-            className="rounded-full"
-          />
-          <span className="text-white text-2xl font-semibold">Hero Farma</span>
+    <nav className="bg-gradient-to-r from-indigo-500 to-cyan-500 shadow-md fixed w-full z-50 font-semibold text-white">
+      <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo & Nama Brand */}
+        <div className="flex items-center space-x-4">
+          <div className="w-12 h-12 rounded-full bg-white/20 p-1 backdrop-blur-sm">
+            <Image
+              src="/assets/images/LOGO.png"
+              alt="Hero Farma Logo"
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          </div>
+          <span className="text-2xl drop-shadow-md tracking-wide">Hero Farma</span>
         </div>
 
         {/* Menu Desktop */}
-        <div className="hidden md:flex space-x-8">
-          <Link
-            href="/"
-            className="text-white hover:text-yellow-400 transition duration-300"
-          >
-            Home
-          </Link>
-          <Link
-            href="/tentang-kami"
-            className="text-white hover:text-yellow-400 transition duration-300"
-          >
-            Tentang Kami
-          </Link>
-          <Link
-            href="/produk"
-            className="text-white hover:text-yellow-400 transition duration-300"
-          >
-            Produk
-          </Link>
-          <Link
-            href="/rekomendasi"
-            className="text-white hover:text-yellow-400 transition duration-300"
-          >
-            Rekomendasi
-          </Link>
-          <Link
-            href="/kontak"
-            className="text-white hover:text-yellow-400 transition duration-300"
-          >
-            Kontak
-          </Link>
+        <div className="hidden md:flex space-x-10 text-lg">
+          {[
+            { href: "/", label: "Home" },
+            { href: "/tentang-kami", label: "Tentang Kami" },
+            { href: "/produk", label: "Produk" },
+            { href: "/rekomendasi", label: "Rekomendasi" },
+            { href: "/kontak", label: "Kontak" },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="hover:text-yellow-300 transition duration-300 hover:scale-105"
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
 
-        {/* Hamburger Menu untuk Mobile */}
+        {/* Hamburger Menu (Mobile) */}
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -71,15 +56,15 @@ export default function Navbar() {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
+              className="w-8 h-8"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              className="w-8 h-8"
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
+                strokeWidth={2}
                 d="M4 6h16M4 12h16M4 18h16"
               />
             </svg>
@@ -87,39 +72,27 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Dropdown Menu untuk Mobile */}
+      {/* Dropdown Mobile Menu */}
       <div
         className={`${
           isMenuOpen ? "block" : "hidden"
-        } md:hidden bg-blue-500 text-white py-4 space-y-4`}
+        } md:hidden bg-indigo-500 bg-opacity-95 border-t border-white/20 py-4 px-6 space-y-4 text-center`}
       >
-        <Link href="/" className="block text-center hover:text-yellow-400">
-          Home
-        </Link>
-        <Link
-          href="/tentang-kami"
-          className="block text-center hover:text-yellow-400"
-        >
-          Tentang Kami
-        </Link>
-        <Link
-          href="/produk"
-          className="block text-center hover:text-yellow-400"
-        >
-          Produk
-        </Link>
-        <Link
-          href="/rekomendasi"
-          className="block text-center hover:text-yellow-400"
-        >
-          Rekomendasi
-        </Link>
-        <Link
-          href="/kontak"
-          className="block text-center hover:text-yellow-400"
-        >
-          Kontak
-        </Link>
+        {[
+          { href: "/", label: "Home" },
+          { href: "/tentang-kami", label: "Tentang Kami" },
+          { href: "/produk", label: "Produk" },
+          { href: "/rekomendasi", label: "Rekomendasi" },
+          { href: "/kontak", label: "Kontak" },
+        ].map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="block text-white hover:text-yellow-300 transition duration-300"
+          >
+            {item.label}
+          </Link>
+        ))}
       </div>
     </nav>
   );

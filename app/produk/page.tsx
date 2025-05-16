@@ -47,52 +47,48 @@ export default function Produk() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 py-12 px-6">
-      <h1 className="text-4xl font-extrabold text-center text-blue-600 mb-10 drop-shadow-md">
-        Daftar Produk Obat
+    <div className="min-h-screen bg-gray-100 py-10 px-4">
+      <h1 className="text-3xl font-bold text-center text-blue-500 mb-8">
+        Produk Obat
       </h1>
 
       {/* Search Bar */}
-      <div className="max-w-xl mx-auto mb-10">
-        <div className="flex items-center bg-white shadow-lg rounded-full px-5 py-3 border border-blue-300">
-          <input
-            type="text"
-            placeholder="Cari nama obat, kategori, atau indikasi..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="flex-grow px-4 py-2 text-sm text-gray-700 focus:outline-none"
-          />
-          <button
-            onClick={handleSearch}
-            className="text-blue-500 hover:text-blue-700 transition-colors"
-            title="Cari"
-          >
-            <FaSearch size={18} />
-          </button>
-        </div>
+      <div className="max-w-md mx-auto mb-6 flex items-center space-x-2 border-2 border-blue-500 rounded-full p-2">
+        <input
+          type="text"
+          placeholder="Cari obat, kategori, atau indikasi..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="flex-grow px-4 py-2 rounded-full outline-none"
+        />
+        <button onClick={handleSearch} className="text-blue-500">
+          <FaSearch size={20} />
+        </button>
       </div>
 
       {/* Produk List */}
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredObats.length > 0 ? (
           filteredObats.map((obat) => (
             <Link key={obat.id} href={`/produk/${obat.id}`}>
-              <div className="bg-white p-5 rounded-2xl shadow-md hover:shadow-xl hover:scale-[1.03] transition-all duration-300 border border-gray-200">
+              <div className="bg-white p-4 rounded-lg shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
                 <img
                   src={obat.imageUrl}
                   alt={obat.namaObat}
-                  className="w-full h-48 object-cover rounded-xl mb-4"
+                  width={200}
+                  height={200}
+                  className="w-full h-48 object-cover rounded-lg mb-4"
                 />
-                <h3 className="text-lg font-bold text-blue-600 truncate">
+                <h3 className="text-lg font-semibold text-blue-500">
                   {obat.namaObat}
                 </h3>
-                <p className="text-sm text-gray-500 mt-1 italic">
+                <p className="text-gray-600 text-sm mt-2">
                   {obat.kategoriObat}
                 </p>
-                <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                <p className="text-gray-500 text-sm mt-1">
                   {obat.indikasiObat}
                 </p>
-                <p className="font-semibold text-teal-600 mt-3 text-right">
+                <p className="font-semibold text-teal-500 mt-3">
                   {formatPrice(obat.harga)}
                 </p>
               </div>
@@ -100,7 +96,7 @@ export default function Produk() {
           ))
         ) : (
           <p className="text-center text-gray-500 col-span-full">
-            Tidak ada produk yang ditemukan.
+            Tidak ada produk yang ditemukan
           </p>
         )}
       </div>
