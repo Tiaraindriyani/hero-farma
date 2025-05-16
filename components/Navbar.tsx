@@ -19,7 +19,7 @@ export default function Navbar() {
         <div className="flex items-center space-x-4">
           <div className="w-12 h-12 rounded-full bg-white/20 p-1 backdrop-blur-sm">
             <Image
-              src="/assets/images/LOGO.png"
+              src="/assets/images/logo.png"
               alt="Hero Farma Logo"
               width={40}
               height={40}
