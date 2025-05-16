@@ -17,7 +17,7 @@ export default function Home() {
 
         <div className="z-10 px-6 py-12 md:px-12 lg:px-24 text-center">
           <Image
-            src="/assets/images/logo.png"
+            src="/assets/images/LOGO.png"
             alt="Hero Farma Logo"
             width={260} // diperbesar
             height={260} // diperbesar
