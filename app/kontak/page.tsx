@@ -117,48 +117,59 @@ export default function ContactPage() {
             </form>
           </div>
 
-          {/* Informasi Kontak */}
+          {/* Info Kontak */}
           <div className="bg-white rounded-2xl shadow-md p-6 space-y-6">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Info Kontak
-            </h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Info Kontak</h2>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <MapPin className="text-blue-500 mt-1" />
                 <div>
                   <h3 className="font-semibold">Alamat</h3>
                   <p className="text-gray-600">
-                    Jl. Sehat No.123, Colomadu, Indonesia
+                    Karangpung, RT 03/ RW 09, Kismoyo, Ngemplak, Boyolali
                   </p>
+                  {/* Google Maps Embed */}
+                  <div className="mt-3 rounded-lg overflow-hidden">
+                    <iframe
+                      title="Lokasi Hero Farma"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.8083345672983!2d110.695972!3d-7.5484205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a1511adad7199%3A0x2bb4799bc44f0e53!2sKismoyo%2C%20Ngemplak%2C%20Boyolali%20Regency%2C%20Central%20Java!5e0!3m2!1sen!2sid!4v1715932350000!5m2!1sen!2sid"
+                      width="100%"
+                      height="250"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    ></iframe>
+                  </div>
                 </div>
               </div>
+
               <div className="flex items-start gap-3">
                 <Phone className="text-blue-500 mt-1" />
                 <div>
                   <h3 className="font-semibold">Telepon</h3>
-                  <p className="text-gray-600">+62 812 3456 7890</p>
+                  <p className="text-gray-600">+6285643724684</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Mail className="text-blue-500 mt-1" />
                 <div>
                   <h3 className="font-semibold">Email</h3>
-                  <p className="text-gray-600">Tiara@hero-farma.com</p>
+                  <p className="text-gray-600">hero-farma@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Clock className="text-blue-500 mt-1" />
                 <div>
                   <h3 className="font-semibold">Jam Operasional</h3>
-                  <p className="text-gray-600">Senin - Jumat: 08:00 - 18:00</p>
-                  <p className="text-gray-600">Sabtu: 08:00 - 14:00</p>
-                  <p className="text-gray-600">Minggu: Tutup</p>
+                  <p className="text-gray-600">Senin - Minggu : 07:00 - 21:00</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Pesan Terima Kasih di bawah grid */}
         <p className="text-center text-gray-700 mt-10 text-lg">
           Terima kasih telah menghubungi kami. Kami akan segera merespons pesan Anda!
         </p>
