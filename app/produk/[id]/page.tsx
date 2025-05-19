@@ -103,7 +103,7 @@ export default function ObatDetailPage() {
                 Harga
               </span>
               <p className="text-xl font-bold text-green-700">
-                Rp {Number(obat.harga).toLocaleString("id-ID")},00
+                Rp {obat.harga},00
               </p>
             </div>
           </div>

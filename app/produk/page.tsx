@@ -89,7 +89,7 @@ export default function Produk() {
                   {obat.indikasiObat}
                 </p>
                 <p className="font-semibold text-teal-500 mt-3">
-                  {formatPrice(obat.harga)}
+                  Rp. {obat.harga}
                 </p>
               </div>
             </Link>
