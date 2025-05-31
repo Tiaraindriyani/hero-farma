@@ -62,7 +62,8 @@ export default function HistoryPage() {
                   <th className="py-3 px-6 text-left">Nama</th>
                   <th className="py-3 px-6 text-left">Usia</th>
                   <th className="py-3 px-6 text-left">Keluhan</th>
-                  <th className="py-3 px-6 text-left">Kategori</th>
+                  <th className="py-3 px-6 text-left">Riwayat</th>
+                  <th className="py-3 px-6 text-left">Durasi</th>
                   <th className="py-3 px-6 text-left">Tanggal</th>
                 </tr>
               </thead>
@@ -71,8 +72,9 @@ export default function HistoryPage() {
                   <tr key={history.id} className="border-t hover:bg-gray-100">
                     <td className="py-3 px-6">{history.nama}</td>
                     <td className="py-3 px-6">{history.usia}</td>
-                    <td className="py-3 px-6">{history.keluhan}</td>
-                    <td className="py-3 px-6">{history.kategori}</td>
+                    <td className="py-3 px-6">{history.indikasi}</td>
+                    <td className="py-3 px-6">{history.riwayatPenyakit}</td>
+                    <td className="py-3 px-6">{history.durasi}</td>
                     <td className="py-3 px-6">
                       {new Date(history.dateCreated).toLocaleString()}
                     </td>

@@ -131,13 +131,13 @@ export default function Page() {
                     <strong>Usia:</strong> {item.usia}
                   </p>
                   <p>
-                    <strong>Keluhan:</strong> {item.keluhan}
+                    <strong>Keluhan:</strong> {item.indikasi}
                   </p>
                   <p>
-                    <strong>Kategori:</strong> {item.kategori}
+                    <strong>Kategori:</strong> {item.riwayatPenyakit}
                   </p>
                   <p>
-                    <strong>Durasi:</strong> {item.durasii}
+                    <strong>Durasi:</strong> {item.durasi}
                   </p>
                   <p>
                     <strong>Riwayat Penyakit:</strong> {item.riwayatPenyakit}
