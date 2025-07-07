@@ -124,7 +124,7 @@ export default function ObatForm({ existingData, onClose }: ObatFormProps) {
 
         <div>
           <label className="block text-sm font-medium mb-1">
-            Indikasi Obat
+            Keluhan
           </label>
           <input
             type="text"
@@ -137,7 +137,7 @@ export default function ObatForm({ existingData, onClose }: ObatFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">Efek Samping</label>
+          <label className="block text-sm font-medium mb-1">Riwayat Penyakit</label>
           <input
             type="text"
             placeholder="Efek Samping"

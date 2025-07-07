@@ -69,8 +69,8 @@ export default function EventTable() {
             <tr className="bg-blue-500 text-white">
               <th className="p-4">Nama Obat</th>
               <th className="p-4">Kategori</th>
-              <th className="p-4">Indikasi</th>
-              <th className="p-4">Efek Samping</th>
+              <th className="p-4">Keluhan</th>
+              <th className="p-4">Riwayat Penyakit</th>
               <th className="p-4">Bentuk</th>
               <th className="p-4">Deskripsi</th>
               <th className="p-4">Harga</th>

@@ -12,7 +12,7 @@ export function tfidfVectorize(
   const terms = new Set<string>();
 
   // Tokenisasi dan kumpulkan semua kata unik dari seluruh dokumen
-  allDocs.forEach((doc) => {
+  allDocs.forEach((doc) => { 
     doc
       .toLowerCase()
       .split(/\W+/)

@@ -1,68 +1,101 @@
-
+// app/api/rekomendasi/route.ts
 import { NextResponse } from "next/server";
-import { TfIdf, WordTokenizer } from "natural";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 export async function POST(request: Request) {
-  const { keluhan, kategori, durasi, riwayatPenyakit } = await request.json();
+  try {
+    const { nama, usia, indikasi, durasi, riwayatPenyakit } = await request.json();
 
-  const snapshot = await getDocs(collection(db, "obat"));
-  const dataObat = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...(doc.data() as any),
-  }));
+    if (!indikasi) {
+      return NextResponse.json({ error: "Indikasi wajib diisi." }, { status: 400 });
+    }
 
-  const tfidf = new TfIdf();
-  const tokenizer = new WordTokenizer();
+    const snapshot = await getDocs(collection(db, "obat"));
+    const dataObat = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as any),
+    }));
 
-  const semuaDokumen: string[] = [];
-  dataObat.forEach((obat) => {
-    const deskripsi = `${obat.namaObat} ${obat.kategoriObat} ${obat.indikasiObat} ${obat.efekSamping} ${obat.bentukObat} ${obat.deskripsiObat}`;
-    semuaDokumen.push(deskripsi.toLowerCase());
-    tfidf.addDocument(deskripsi.toLowerCase());
-  });
+    const tokenize = (text: string) =>
+      text
+        .toLowerCase()
+        .replace(/[^\w\s]/g, "")
+        .split(/\s+/)
+        .filter(Boolean);
 
-  const query =
-    `${keluhan} ${kategori} ${durasi} ${riwayatPenyakit}`.toLowerCase();
-  const queryTokens = tokenizer.tokenize(query);
+    const query = `${indikasi} ${riwayatPenyakit}`;
+    const queryTokens = tokenize(query);
 
-  const semuaTerm: string[] = [];
-  tfidf.documents.forEach((doc, i) => {
-    tfidf.listTerms(i).forEach((term) => {
-      if (!semuaTerm.includes(term.term)) semuaTerm.push(term.term);
-    });
-  });
-
-  const queryVector = semuaTerm.map((term) =>
-    queryTokens.includes(term) ? tfidf.idf(term) : 0
-  );
-
-  const hasil = dataObat.map((obat, index) => {
-    const docTerms = tfidf.listTerms(index);
-    const docVector = semuaTerm.map((term) => {
-      const item = docTerms.find((t) => t.term === term);
-      return item ? item.tfidf : 0;
+    const dokumenList = dataObat.map((obat) => {
+      const combinedText = `${obat.namaObat || ""} ${obat.indikasiObat || ""} ${obat.efekSamping || ""} ${obat.bentukObat || ""} ${obat.deskripsiObat || ""}`;
+      return tokenize(combinedText);
     });
 
-    const dotProduct = queryVector.reduce(
-      (sum, val, i) => sum + val * docVector[i],
-      0
-    );
-    const magnitudeA = Math.sqrt(
-      queryVector.reduce((sum, val) => sum + val * val, 0)
-    );
-    const magnitudeB = Math.sqrt(
-      docVector.reduce((sum, val) => sum + val * val, 0)
-    );
-    const similarity =
-      magnitudeA === 0 || magnitudeB === 0
-        ? 0
-        : dotProduct / (magnitudeA * magnitudeB);
+    const semuaTerm: string[] = [];
+    dokumenList.forEach((tokens) => {
+      tokens.forEach((term) => {
+        if (!semuaTerm.includes(term)) semuaTerm.push(term);
+      });
+    });
 
-    return { ...obat, similarity };
-  });
+    const df: Record<string, number> = {};
+    semuaTerm.forEach((term) => {
+      df[term] = dokumenList.filter((tokens) => tokens.includes(term)).length;
+    });
 
-  const sorted = hasil.sort((a, b) => b.similarity - a.similarity);
-  return NextResponse.json(sorted.slice(0, 5));
+    const idf: Record<string, number> = {};
+    semuaTerm.forEach((term) => {
+      idf[term] = Math.log(dataObat.length / (df[term] || 1));
+    });
+
+    const tfidfDocs = dokumenList.map((tokens) => {
+      const tf: Record<string, number> = {};
+      tokens.forEach((term) => {
+        tf[term] = (tf[term] || 0) + 1;
+      });
+      const totalTerms = tokens.length;
+      return semuaTerm.map((term) => ((tf[term] || 0) / totalTerms) * (idf[term] || 0));
+    });
+
+    const tfQuery: Record<string, number> = {};
+    queryTokens.forEach((term) => {
+      tfQuery[term] = (tfQuery[term] || 0) + 1;
+    });
+    const totalQueryTerms = queryTokens.length;
+    const queryVector = semuaTerm.map(
+      (term) => ((tfQuery[term] || 0) / totalQueryTerms) * (idf[term] || 0)
+    );
+
+    const hasil = tfidfDocs.map((docVector, index) => {
+      const dotProduct = docVector.reduce((sum, val, i) => sum + val * queryVector[i], 0);
+      const magnitudeDoc = Math.sqrt(docVector.reduce((sum, val) => sum + val * val, 0));
+      const magnitudeQuery = Math.sqrt(queryVector.reduce((sum, val) => sum + val * val, 0));
+      const similarity =
+        magnitudeDoc && magnitudeQuery ? dotProduct / (magnitudeDoc * magnitudeQuery) : 0;
+
+      return { ...dataObat[index], similarity };
+    });
+
+    const sorted = hasil.sort((a, b) => b.similarity - a.similarity);
+    const top3 = sorted.filter((o) => o.similarity > 0).slice(0, 3);
+
+    await addDoc(collection(db, "history"), {
+      nama,
+      usia,
+      indikasi,
+      durasi,
+      riwayatPenyakit,
+      rekomendasiObat: top3.map((obat) => ({
+        namaObat: obat.namaObat || "-",
+        similarity: parseFloat(obat.similarity.toFixed(4)),
+      })),
+      dateCreated: new Date().toISOString(),
+    });
+
+    return NextResponse.json(top3);
+  } catch (error) {
+    console.error("Error rekomendasi:", error);
+    return NextResponse.json({ error: "Terjadi kesalahan server." }, { status: 500 });
+  }
 }

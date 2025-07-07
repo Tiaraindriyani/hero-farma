@@ -64,6 +64,7 @@ export default function HistoryPage() {
                   <th className="py-3 px-6 text-left">Keluhan</th>
                   <th className="py-3 px-6 text-left">Riwayat</th>
                   <th className="py-3 px-6 text-left">Durasi</th>
+                  <th className="py-3 px-6 text-left">Rekomendasi</th>
                   <th className="py-3 px-6 text-left">Tanggal</th>
                 </tr>
               </thead>
@@ -75,6 +76,14 @@ export default function HistoryPage() {
                     <td className="py-3 px-6">{history.indikasi}</td>
                     <td className="py-3 px-6">{history.riwayatPenyakit}</td>
                     <td className="py-3 px-6">{history.durasi}</td>
+                    <td className="py-3 px-6">
+                       {history.rekomendasiObat?.map((obat: any, index: number) => (
+              <p  key={index}>
+                {obat.namaObat}
+              </p>
+               ))}
+                    </td>
+
                     <td className="py-3 px-6">
                       {new Date(history.dateCreated).toLocaleString()}
                     </td>

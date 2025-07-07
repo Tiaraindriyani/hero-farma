@@ -114,42 +114,39 @@ export default function Page() {
           </div>
 
           {/* Histori */}
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              5 Histori Terbaru
-            </h2>
-            <div className="space-y-4">
-              {recentHistories.map((item) => (
-                <div
-                  key={item.id}
-                  className="bg-white p-4 rounded-lg shadow-md"
-                >
-                  <p>
-                    <strong>Nama:</strong> {item.nama}
-                  </p>
-                  <p>
-                    <strong>Usia:</strong> {item.usia}
-                  </p>
-                  <p>
-                    <strong>Keluhan:</strong> {item.indikasi}
-                  </p>
-                  <p>
-                    <strong>Kategori:</strong> {item.riwayatPenyakit}
-                  </p>
-                  <p>
-                    <strong>Durasi:</strong> {item.durasi}
-                  </p>
-                  <p>
-                    <strong>Riwayat Penyakit:</strong> {item.riwayatPenyakit}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    <strong>Tanggal:</strong>{" "}
-                    {new Date(item.dateCreated).toLocaleString()}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="mt-8">
+  <h2 className="text-xl font-semibold text-gray-800 mb-4">
+    5 Histori Terbaru
+  </h2>
+  <div className="space-y-4">
+    {recentHistories.map((item) => (
+      <div key={item.id} className="bg-white p-4 rounded-lg shadow-md">
+        <p><strong>Nama:</strong> {item.nama}</p>
+        <p><strong>Usia:</strong> {item.usia}</p>
+        <p><strong>Keluhan:</strong> {item.indikasi}</p>
+        <p><strong>Durasi:</strong> {item.durasi}</p>
+        <p><strong>Riwayat Penyakit:</strong> {item.riwayatPenyakit}</p>
+
+        {/* Tampilkan semua rekomendasi obat */}
+        <div className="mt-2">
+          <strong>Rekomendasi Obat:</strong>
+          <ul className="list-disc ml-6">
+            {item.rekomendasiObat?.map((obat: any, index: number) => (
+              <li key={index}>
+                {obat.namaObat}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="text-sm text-gray-500 mt-2">
+          <strong>Tanggal:</strong> {new Date(item.dateCreated).toLocaleString()}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
+
 
           {/* ➕ Bagian Pesan */}
           <div className="mt-8">
