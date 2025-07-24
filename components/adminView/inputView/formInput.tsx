@@ -16,26 +16,20 @@ type ObatFormProps = {
     bentukObat: string;
     harga: string;
     deskripsiObat: string;
+    usia?: string;
   };
   onClose: () => void;
 };
 
 export default function ObatForm({ existingData, onClose }: ObatFormProps) {
   const [namaObat, setNamaObat] = useState(existingData?.namaObat || "");
-  const [kategoriObat, setKategoriObat] = useState(
-    existingData?.kategoriObat || ""
-  );
-  const [indikasiObat, setIndikasiObat] = useState(
-    existingData?.indikasiObat || ""
-  );
-  const [efekSamping, setEfekSamping] = useState(
-    existingData?.efekSamping || ""
-  );
+  const [kategoriObat, setKategoriObat] = useState(existingData?.kategoriObat || "");
+  const [indikasiObat, setIndikasiObat] = useState(existingData?.indikasiObat || "");
+  const [efekSamping, setEfekSamping] = useState(existingData?.efekSamping || "");
   const [bentukObat, setBentukObat] = useState(existingData?.bentukObat || "");
   const [harga, setHarga] = useState(existingData?.harga || "");
-  const [deskripsiObat, setDeskripsiObat] = useState(
-    existingData?.deskripsiObat || ""
-  );
+  const [deskripsiObat, setDeskripsiObat] = useState(existingData?.deskripsiObat || "");
+  const [usia, setUsia] = useState(existingData?.usia || "");
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -63,6 +57,7 @@ export default function ObatForm({ existingData, onClose }: ObatFormProps) {
           bentukObat,
           harga,
           deskripsiObat,
+          usia,
           updatedAt: timestamp,
           ...(image && { imageUrl }),
         });
@@ -75,8 +70,9 @@ export default function ObatForm({ existingData, onClose }: ObatFormProps) {
           efekSamping,
           bentukObat,
           harga,
-          imageUrl,
           deskripsiObat,
+          usia,
+          imageUrl,
           dateCreated: timestamp,
         });
         toast.success("Data berhasil ditambahkan!");
@@ -123,9 +119,7 @@ export default function ObatForm({ existingData, onClose }: ObatFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">
-            Keluhan
-          </label>
+          <label className="block text-sm font-medium mb-1">Keluhan</label>
           <input
             type="text"
             placeholder="Indikasi Obat"
@@ -161,9 +155,19 @@ export default function ObatForm({ existingData, onClose }: ObatFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">
-            Deskripsi Obat
-          </label>
+          <label className="block text-sm font-medium mb-1">Usia</label>
+          <input
+            type="text"
+            placeholder="Usia"
+            value={usia}
+            onChange={(e) => setUsia(e.target.value)}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Deskripsi Obat</label>
           <input
             type="text"
             placeholder="Deskripsi Obat"
@@ -187,9 +191,7 @@ export default function ObatForm({ existingData, onClose }: ObatFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">
-            Upload Gambar
-          </label>
+          <label className="block text-sm font-medium mb-1">Upload Gambar</label>
           <input
             type="file"
             onChange={(e) => setImage(e.target.files?.[0] || null)}

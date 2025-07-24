@@ -77,7 +77,7 @@ export default function Sidebar() {
               {
                 href: "/admin/pesan",
                 icon: <FaPeopleGroup />,
-                label: "Pesan",
+                label: "Saran",
               },
             ].map((item) => {
               const isActive = pathname === item.href;

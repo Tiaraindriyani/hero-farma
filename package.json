@@ -12,6 +12,8 @@
     "cloudinary": "^2.6.1",
     "clsx": "^2.1.1",
     "firebase": "^11.10.0",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "lodash": "^4.17.21",
     "lucide-react": "^0.510.0",
     "natural": "^0.6.3",

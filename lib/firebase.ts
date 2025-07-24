@@ -18,3 +18,4 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const obatsCollection = collection(db, "obat");
 export const historysCollection = collection(db, "history");
+export const pesanCollection = collection(db, "pesan");

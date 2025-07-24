@@ -67,14 +67,27 @@ export async function POST(request: Request) {
       (term) => ((tfQuery[term] || 0) / totalQueryTerms) * (idf[term] || 0)
     );
 
+    // Tentukan klasifikasi usia
+    const usiaKategori = usia < 12 ? "anak" : usia < 60 ? "dewasa" : "lansia";
+
     const hasil = tfidfDocs.map((docVector, index) => {
       const dotProduct = docVector.reduce((sum, val, i) => sum + val * queryVector[i], 0);
       const magnitudeDoc = Math.sqrt(docVector.reduce((sum, val) => sum + val * val, 0));
       const magnitudeQuery = Math.sqrt(queryVector.reduce((sum, val) => sum + val * val, 0));
-      const similarity =
+      let similarity =
         magnitudeDoc && magnitudeQuery ? dotProduct / (magnitudeDoc * magnitudeQuery) : 0;
 
-      return { ...dataObat[index], similarity };
+      // Penyesuaian berdasarkan usia
+      const obat = dataObat[index];
+      const usiaAnjuran = (obat.usiaAnjuran || "").toLowerCase(); // contoh: "anak", "dewasa", "semua"
+      if (
+        usiaAnjuran !== "semua" &&
+        usiaAnjuran !== usiaKategori
+      ) {
+        similarity *= 0.6; // berikan penalti jika tidak cocok
+      }
+
+      return { ...obat, similarity };
     });
 
     const sorted = hasil.sort((a, b) => b.similarity - a.similarity);

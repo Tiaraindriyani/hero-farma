@@ -16,6 +16,7 @@ interface Obat {
   bentukObat: string;
   harga: string;
   deskripsiObat: string;
+  usia?: string; // ✅ Tambahkan usia ke interface
 }
 
 export default function EventTable() {
@@ -74,6 +75,7 @@ export default function EventTable() {
               <th className="p-4">Bentuk</th>
               <th className="p-4">Deskripsi</th>
               <th className="p-4">Harga</th>
+              <th className="p-4">Usia</th> 
               <th className="p-4">Gambar</th>
               <th className="p-4">Action</th>
             </tr>
@@ -90,6 +92,7 @@ export default function EventTable() {
                   {obat.deskripsiObat.substring(0, 20)}...
                 </td>
                 <td className="p-4 text-center">{obat.harga}</td>
+                <td className="p-4 text-center">{obat.usia || "-"}</td> 
                 <td className="p-4 text-center">
                   <img
                     src={obat.imageUrl}
